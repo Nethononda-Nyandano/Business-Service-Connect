@@ -1,0 +1,168 @@
+/* Custom CSS styles */
+
+/* Main styles */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* Card styles */
+.service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Hero section */
+.hero-section {
+    padding: 4rem 0;
+    background-color: var(--bs-dark);
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Search form */
+.search-form {
+    background-color: rgba(var(--bs-dark-rgb), 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Provider profile */
+.profile-header {
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+}
+
+.avatar-lg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Rating stars */
+.rating {
+    color: gold;
+}
+
+/* Status badges */
+.status-badge {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Notification dropdown */
+.notifications-dropdown {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Features section */
+.feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #fff;
+    border-radius: 0.5rem;
+}
+
+/* Dashboard stats */
+.stat-card {
+    border-left: 4px solid;
+}
+
+.stat-card.stat-primary {
+    border-left-color: var(--bs-primary);
+}
+
+.stat-card.stat-success {
+    border-left-color: var(--bs-success);
+}
+
+.stat-card.stat-info {
+    border-left-color: var(--bs-info);
+}
+
+.stat-card.stat-warning {
+    border-left-color: var(--bs-warning);
+}
+
+/* Form validation styles */
+.is-invalid {
+    border-color: var(--bs-danger);
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--bs-danger);
+}
+
+/* Testimonial section */
+.testimonial-card {
+    background-color: rgba(var(--bs-dark-rgb), 0.8);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Custom animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Request form modal */
+.request-form-modal .modal-body {
+    padding: 2rem;
+}
+
+/* Category icons */
+.category-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
