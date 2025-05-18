@@ -1,0 +1,65 @@
+Business Advertisement and Service Request System Documentation
+(Simplified Version - No Online Payments - Laravel Stack)
+1. Introduction
+The Business Advertisement and Service Request System is a platform designed to help small businesses advertise their services using a modern Laravel-based stack. Customers can search for providers and send service requests, with all transactions happening offline.
+1.1 Tech Stack
+•	Backend: Laravel 10
+•	Frontend: Livewire 3, Alpine.js
+•	UI Components: WireUI
+•	Authentication: Laravel Breeze (Simple Session-Based)
+•	Database: MySQL
+________________________________________
+2. System Features
+2.1 User Roles
+1.	Business Owners/Service Providers
+o	Register via Laravel Breeze.
+o	Manage profile using Livewire forms.
+o	Receive email/SMS notifications for requests.
+2.	Customers
+o	Search using Livewire real-time filtering.
+o	Submit requests via Livewire modals.
+3.	Admin (Optional)
+o	Manage users via custom Livewire admin panel.
+________________________________________
+3. Technical Architecture (Laravel Stack)
+3.1 System Components
+1.	Frontend
+o	Blade Templates + WireUI for responsive UI.
+o	Livewire 3 for dynamic search/request forms.
+o	Alpine.js for interactive elements (dropdowns, modals).
+Laravel 10 (Controllers, Models, Policies).
+o	Database: SQLITE
+o	Laravel Breeze (Email/Password + Optional Phone Verification).
+________________________________________
+4. Workflow (Laravel Implementation)
+4.1 Customer Submits Request
+1.	Livewire sends AJAX request to Laravel backend.
+2.	Laravel creates a ServiceRequest record.
+3.	Notification sent via Laravel’s email/SMS channel.
+4.2 Business Responds
+1.	Provider logs in (Breeze session).
+2.	Updates request status via Livewire.
+3.	Customer receives response.
+________________________________________
+5. Security & Performance
+•	Laravel Policies for authorization.
+•	Livewire lazy loading for faster searches.
+•	No payment gateways (simplifies PCI compliance).
+________________________________________
+6. Deployment
+•	For MVP: Shared hosting (e.g., Laravel Forge + DigitalOcean).
+•	Database: MySQL (or SQLite for testing).
+________________________________________
+7. Conclusion
+This Laravel stack provides:
+✅ Rapid development with Livewire + WireUI.
+✅ No complex JS (Alpine.js for minimal interactivity).
+✅ Scalable (add admin features later).
+Next Steps:
+1.	Set up Laravel Breeze.
+2.	Build Livewire search/request components.
+3.	Deploy MVP for testing.
+Need adjustments? For example:
+•	Add Filament for admin panel?
+•	Use Laravel Echo for real-time updates?
+
