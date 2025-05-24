@@ -1,10 +1,10 @@
 <?php
 require_once 'includes/header.php';
 
-// Get featured service categories
+
 $categories = getAllCategories();
 
-// Featured services - get 6 latest services
+
 $stmt = $pdo->query("
     SELECT s.*, c.name as category_name, pp.business_name  
     FROM services s
@@ -26,30 +26,30 @@ $featuredServices = $stmt->fetchAll();
                 <p class="lead mb-4">Connect with trusted service providers in your area. Submit requests and get the services you need, all in one place.</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                     <?php if (!isLoggedIn()): ?>
-                        <a href="/auth/register.php?type=customer" class="btn btn-primary btn-lg px-4 me-md-2">Find Services</a>
-                        <a href="/auth/register.php?type=provider" class="btn btn-outline-light btn-lg px-4">Offer Services</a>
+                        <a href="http://localhost/BusinessServiceTracker/auth/register.php?type=customer" class="btn btn-primary btn-lg px-4 me-md-2">Find Services</a>
+                        <a href="auth/register.php?type=provider" class="btn btn-outline-light btn-lg px-4">Offer Services</a>
                     <?php else: ?>
-                        <a href="/customer/search.php" class="btn btn-primary btn-lg px-4 me-md-2">Find Services</a>
+                        <a href="http://localhost/BusinessServiceTracker/customer/search.php" class="btn btn-primary btn-lg px-4 me-md-2">Find Services</a>
                         <?php if (isCustomer()): ?>
-                            <a href="/customer/requests.php" class="btn btn-outline-light btn-lg px-4">My Requests</a>
+                            <a href="http://localhost/BusinessServiceTracker/customer/requests.php" class="btn btn-outline-light btn-lg px-4">My Requests</a>
                         <?php elseif (isProvider()): ?>
-                            <a href="/provider/services.php" class="btn btn-outline-light btn-lg px-4">Manage Services</a>
+                            <a href="http://localhost/BusinessServiceTracker/provider/services.php" class="btn btn-outline-light btn-lg px-4">Manage Services</a>
                         <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="col-lg-6">
-                <img src="https://pixabay.com/get/gc9c0f959488217c561ac9080ac4e00c0c488a40a00f5bb13da4e8b01da1cd65dfb3bdf1fd10626f763205f2e2bdc73f5353f9346a12d75edaf58ba2cd4e15b03_1280.jpg" alt="Business Services" class="img-fluid rounded hero-image">
+                <img src="https://cdn.pixabay.com/photo/2017/05/01/14/59/call-center-2275745_1280.jpg" alt="Business Services" class="img-fluid rounded hero-image" style="border-radius: 10px;">
             </div>
         </div>
     </div>
 </div>
 
-<!-- Search Section -->
+
 <div class="container my-5">
     <div class="search-form p-4 rounded shadow-sm">
         <h2 class="text-center mb-4">Find Services</h2>
-        <form action="/customer/search.php" method="get">
+        <form action="http://localhost/BusinessServiceTracker/customer/search.php" method="get">
             <div class="row g-3">
                 <div class="col-md-5">
                     <label for="searchQuery" class="form-label">What service do you need?</label>
@@ -78,12 +78,12 @@ $featuredServices = $stmt->fetchAll();
     </div>
 </div>
 
-<!-- Featured Categories Section -->
+
 <div class="container my-5">
     <h2 class="text-center mb-4">Browse Service Categories</h2>
     <div class="row g-4">
         <?php
-        // Define icons for categories
+
         $categoryIcons = [
             'Home Services' => 'fa-home',
             'Professional Services' => 'fa-briefcase',
@@ -94,13 +94,13 @@ $featuredServices = $stmt->fetchAll();
             'Event Services' => 'fa-calendar-check',
             'Auto Services' => 'fa-car'
         ];
-        
+
         foreach ($categories as $index => $category):
-            // Only show first 8 categories
+
             if ($index >= 8) break;
-            
-            // Get icon for category
-            $iconClass = 'fa-star'; // default
+
+
+            $iconClass = 'fa-star';
             foreach ($categoryIcons as $catName => $icon) {
                 if (stripos($category['name'], $catName) !== false) {
                     $iconClass = $icon;
@@ -108,18 +108,18 @@ $featuredServices = $stmt->fetchAll();
                 }
             }
         ?>
-        <div class="col-md-3 col-sm-6">
-            <div class="card text-center h-100 service-card">
-                <div class="card-body">
-                    <div class="category-icon">
-                        <i class="fas <?php echo $iconClass; ?>"></i>
+            <div class="col-md-3 col-sm-6">
+                <div class="card text-center h-100 service-card">
+                    <div class="card-body">
+                        <div class="category-icon">
+                            <i class="fas <?php echo $iconClass; ?>"></i>
+                        </div>
+                        <h5 class="card-title"><?php echo htmlspecialchars($category['name']); ?></h5>
+                        <p class="card-text small"><?php echo htmlspecialchars(substr($category['description'], 0, 100)); ?>...</p>
+                        <a href="http://localhost/BusinessServiceTracker/customer/search.php?category=<?php echo $category['id']; ?>" class="btn btn-sm btn-outline-primary">Browse Services</a>
                     </div>
-                    <h5 class="card-title"><?php echo htmlspecialchars($category['name']); ?></h5>
-                    <p class="card-text small"><?php echo htmlspecialchars(substr($category['description'], 0, 100)); ?>...</p>
-                    <a href="/customer/search.php?category=<?php echo $category['id']; ?>" class="btn btn-sm btn-outline-primary">Browse Services</a>
                 </div>
             </div>
-        </div>
         <?php endforeach; ?>
     </div>
 </div>
@@ -128,26 +128,34 @@ $featuredServices = $stmt->fetchAll();
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Featured Services</h2>
-        <a href="/customer/search.php" class="btn btn-outline-primary">View All</a>
+        <a href="http://localhost/BusinessServiceTracker/customer/search.php" class="btn btn-outline-primary">View All</a>
     </div>
-    
+
     <div class="row g-4">
         <?php if (empty($featuredServices)): ?>
             <div class="col-12 text-center py-5">
                 <p class="text-muted">No services available yet. Be the first to offer a service!</p>
                 <?php if (!isLoggedIn() || isCustomer()): ?>
-                    <a href="/auth/register.php?type=provider" class="btn btn-primary">Register as Provider</a>
+                    <a href="http://localhost/BusinessServiceTracker/auth/register.php?type=provider" class="btn btn-primary">Register as Provider</a>
                 <?php endif; ?>
             </div>
         <?php else: ?>
             <?php foreach ($featuredServices as $service): ?>
                 <div class="col-md-4 mb-4">
-                    <div class="card h-100 service-card">
+                    <div class="card h-100 service-card border-primary">
                         <div class="card-body">
-                            <h5 class="card-title"><?php echo htmlspecialchars($service['title']); ?></h5>
+                            <h5 class="card-title p-2 bg-primary"><?php echo htmlspecialchars($service['title']); ?></h5>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 <?php echo htmlspecialchars($service['business_name']); ?>
                             </h6>
+                            <?php if (!empty($service['image_path'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="<?php echo htmlspecialchars($service['image_path']); ?>"
+                                        alt="Service Image"
+                                        class="img-fluid rounded shadow border"
+                                        style="max-width: 100%; max-height: 180px; object-fit: cover;">
+                                </div>
+                            <?php endif; ?>
                             <div class="mb-2">
                                 <span class="badge bg-secondary"><?php echo htmlspecialchars($service['category_name']); ?></span>
                                 <?php if (!empty($service['price_range'])): ?>
@@ -157,7 +165,7 @@ $featuredServices = $stmt->fetchAll();
                             <p class="card-text"><?php echo htmlspecialchars(substr($service['description'], 0, 120)); ?>...</p>
                         </div>
                         <div class="card-footer bg-transparent border-top-0">
-                            <a href="/customer/search.php?service_id=<?php echo $service['id']; ?>" class="btn btn-primary">View Details</a>
+                            <a href="http://localhost/BusinessServiceTracker/customer/search.php?service_id=<?php echo $service['id']; ?>" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
                 </div>
@@ -172,8 +180,8 @@ $featuredServices = $stmt->fetchAll();
     <div class="row g-4">
         <div class="col-md-4">
             <div class="text-center">
-                <div class="feature-icon bg-primary rounded-circle mx-auto mb-3">
-                    <i class="fas fa-search"></i>
+                <div class="feature-icon   mx-auto mb-3">
+                    <i class="fas fa-search bg-primary p-4" style="border-radius: 50%;"></i>
                 </div>
                 <h3>1. Find Services</h3>
                 <p>Search through our directory of local service providers or browse by category to find what you need.</p>
@@ -181,8 +189,8 @@ $featuredServices = $stmt->fetchAll();
         </div>
         <div class="col-md-4">
             <div class="text-center">
-                <div class="feature-icon bg-success rounded-circle mx-auto mb-3">
-                    <i class="fas fa-paper-plane"></i>
+                <div class="feature-icon  mx-auto mb-3">
+                    <i class="fas fa-paper-plane bg-success  p-4" style="border-radius: 50%;"></i>
                 </div>
                 <h3>2. Submit Request</h3>
                 <p>Send a request directly to the service provider with your specific needs and preferred schedule.</p>
@@ -190,8 +198,8 @@ $featuredServices = $stmt->fetchAll();
         </div>
         <div class="col-md-4">
             <div class="text-center">
-                <div class="feature-icon bg-info rounded-circle mx-auto mb-3">
-                    <i class="fas fa-handshake"></i>
+                <div class="feature-icon  mx-auto mb-3">
+                    <i class="fas fa-handshake bg-info p-4" style="border-radius: 50%;"></i>
                 </div>
                 <h3>3. Get Service</h3>
                 <p>The provider will respond to your request and coordinate with you to deliver the service.</p>
@@ -200,27 +208,26 @@ $featuredServices = $stmt->fetchAll();
     </div>
 </div>
 
-<!-- Testimonials Section -->
+<!-- Testimonials Section
 <div class="container my-5">
     <h2 class="text-center mb-5">What Our Users Say</h2>
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="testimonial-card">
                 <div class="d-flex mb-3">
-                    <img src="https://pixabay.com/get/g03325c1109970c1e120eab7349eed39c0483b059e685bea2cc147a99e39281390f6ab592d0b32f432a1d977d334343a36b89c196fb237440e13e0d55557f0edf_1280.jpg" alt="Customer" class="testimonial-img me-3">
+                    <img src=" alt="Customer" class="testimonial-img me-3">
                     <div>
-                        <h5 class="mb-0">Sarah Johnson</h5>
+                        <h5 class="mb-0"></h5>
                         <small class="text-muted">Customer</small>
                     </div>
                 </div>
-                <p class="mb-0">"I needed an urgent plumbing repair and found a professional through this platform in minutes. The request process was seamless, and the service was excellent!"</p>
+                <p class="mb-0">""</p>
             </div>
         </div>
         <div class="col-md-6 mb-4">
             <div class="testimonial-card">
                 <div class="d-flex mb-3">
-                    <img src="https://pixabay.com/get/g52f690da9ebd03a98b5a6b1b761e528d0178e2aa0e64825b4255c8e5b73cd4b5952a420fa1a9721df3c1b8675f91100ec04afc8abd09676ea7e4a4d6eccc688f_1280.jpg" alt="Provider" class="testimonial-img me-3">
-                    <div>
+                    <img src=" <div>
                         <h5 class="mb-0">Mark Davis</h5>
                         <small class="text-muted">Service Provider</small>
                     </div>
@@ -230,12 +237,13 @@ $featuredServices = $stmt->fetchAll();
         </div>
     </div>
 </div>
+                                -->
 
 <!-- For Providers Section -->
 <div class="container my-5">
     <div class="row align-items-center">
         <div class="col-md-6 mb-4 mb-md-0">
-            <img src="https://pixabay.com/get/g4fb320cb1ac03233a1d5fee40d1eff722c0af78069b8d032a09f909777210afd3eecebb851ad910b1173e98e2417d682ba116892c0d945eec8b375d44b5703ff_1280.jpg" alt="For Providers" class="img-fluid rounded">
+            <img src="https://cdn.pixabay.com/photo/2022/11/16/18/38/mexico-7596566_1280.jpg" alt="For Providers" class="img-fluid rounded" style="border-radius: 10px;">
         </div>
         <div class="col-md-6">
             <h2>Grow Your Business</h2>
@@ -248,9 +256,9 @@ $featuredServices = $stmt->fetchAll();
                 <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Build your online reputation</li>
             </ul>
             <?php if (!isLoggedIn() || isCustomer()): ?>
-                <a href="/auth/register.php?type=provider" class="btn btn-primary btn-lg mt-3">Register as a Provider</a>
+                <a href="auth/register.php?type=provider" class="btn btn-primary btn-lg mt-3">Register as a Provider</a>
             <?php elseif (isProvider()): ?>
-                <a href="/provider/services.php" class="btn btn-primary btn-lg mt-3">Manage Your Services</a>
+                <a href="provider/services.php" class="btn btn-primary btn-lg mt-3">Manage Your Services</a>
             <?php endif; ?>
         </div>
     </div>
@@ -260,7 +268,7 @@ $featuredServices = $stmt->fetchAll();
 <div class="container my-5">
     <div class="row align-items-center flex-md-row-reverse">
         <div class="col-md-6 mb-4 mb-md-0">
-            <img src="https://pixabay.com/get/g71ea106a46be5aafbc34ec12b9a9f3830dd543785cd44b8d52a4183205cd668b2b91550324e33bc5e4eb888d44057821d1d8150efefb743dec73fd63f1343216_1280.jpg" alt="For Customers" class="img-fluid rounded">
+            <img src="https://cdn.pixabay.com/photo/2018/12/09/12/29/customer-3864809_1280.jpg" alt="For Customers" class="img-fluid rounded">
         </div>
         <div class="col-md-6">
             <h2>Find Quality Services</h2>
@@ -273,9 +281,9 @@ $featuredServices = $stmt->fetchAll();
                 <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Track your service requests</li>
             </ul>
             <?php if (!isLoggedIn()): ?>
-                <a href="/auth/register.php?type=customer" class="btn btn-primary btn-lg mt-3">Register as a Customer</a>
+                <a href="auth/register.php?type=customer" class="btn btn-primary btn-lg mt-3">Register as a Customer</a>
             <?php elseif (isCustomer()): ?>
-                <a href="/customer/search.php" class="btn btn-primary btn-lg mt-3">Find Services Now</a>
+                <a href="customer/search.php" class="btn btn-primary btn-lg mt-3">Find Services Now</a>
             <?php endif; ?>
         </div>
     </div>

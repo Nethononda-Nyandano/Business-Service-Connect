@@ -261,15 +261,14 @@ function createServiceRequest() {
         $stmt->execute([$serviceId]);
         $providerInfo = $stmt->fetch();
         
-        // Create notification for provider
+        
         createNotification(
             $providerInfo['provider_user_id'],
             'new_request',
             'New service request: "' . $title . '" for your service "' . $providerInfo['service_title'] . '"',
             $requestId
         );
-        
-        // Send email notification (in a real implementation)
+     
         // sendEmailNotification($providerEmail, 'New Service Request', 'You have received a new service request...');
         
         echo json_encode([

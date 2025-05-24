@@ -11,7 +11,7 @@ $providerProfile = getProviderProfile($provider['id']);
 // If provider hasn't completed profile, redirect to profile page
 if (!$providerProfile) {
     setFlashMessage('info', 'Please complete your business profile to continue');
-    header('Location: /provider/profile.php');
+    header('Location: profile.php');
     exit();
 }
 
@@ -61,7 +61,7 @@ $recentRequests = $stmt->fetchAll();
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center">
             <h2>Provider Dashboard</h2>
-            <a href="/provider/services.php?action=add" class="btn btn-primary">
+            <a href="services.php?action=add" class="btn btn-primary">
                 <i class="fas fa-plus-circle me-2"></i>Add New Service
             </a>
         </div>
@@ -81,11 +81,11 @@ $recentRequests = $stmt->fetchAll();
                         <i class="fas fa-briefcase"></i>
                     </div>
                 </div>
-                <a href="/provider/services.php" class="text-decoration-none">View All Services</a>
+                <a href="services.php" class="text-decoration-none">View All Services</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-3">
         <div class="card stat-card stat-info">
             <div class="card-body">
@@ -98,11 +98,11 @@ $recentRequests = $stmt->fetchAll();
                         <i class="fas fa-clipboard-list"></i>
                     </div>
                 </div>
-                <a href="/provider/requests.php" class="text-decoration-none">View All Requests</a>
+                <a href="requests.php" class="text-decoration-none">View All Requests</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-3">
         <div class="card stat-card stat-warning">
             <div class="card-body">
@@ -115,11 +115,11 @@ $recentRequests = $stmt->fetchAll();
                         <i class="fas fa-clock"></i>
                     </div>
                 </div>
-                <a href="/provider/requests.php?status=pending" class="text-decoration-none">View Pending</a>
+                <a href="requests.php?status=pending" class="text-decoration-none">View Pending</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-3">
         <div class="card stat-card stat-success">
             <div class="card-body">
@@ -132,7 +132,7 @@ $recentRequests = $stmt->fetchAll();
                         <i class="fas fa-eye"></i>
                     </div>
                 </div>
-                <a href="/provider/profile.php" class="text-decoration-none">View Profile</a>
+                <a href="profile.php" class="text-decoration-none">View Profile</a>
             </div>
         </div>
     </div>
@@ -143,7 +143,7 @@ $recentRequests = $stmt->fetchAll();
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Recent Service Requests</h5>
-                <a href="/provider/requests.php" class="btn btn-sm btn-outline-primary">View All</a>
+                <a href="requests.php" class="btn btn-sm btn-outline-primary">View All</a>
             </div>
             <div class="card-body">
                 <?php if (empty($recentRequests)): ?>
@@ -170,7 +170,7 @@ $recentRequests = $stmt->fetchAll();
                                         <td><?php echo getStatusBadge($request['status']); ?></td>
                                         <td><?php echo formatDate($request['created_at']); ?></td>
                                         <td>
-                                            <a href="/provider/requests.php?id=<?php echo $request['id']; ?>" class="btn btn-sm btn-outline-primary">
+                                            <a href="requests.php?id=<?php echo $request['id']; ?>" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
@@ -183,7 +183,7 @@ $recentRequests = $stmt->fetchAll();
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header">
@@ -201,7 +201,7 @@ $recentRequests = $stmt->fetchAll();
                         <span class="badge bg-secondary">Unverified</span>
                     <?php endif; ?>
                 </div>
-                
+
                 <div class="mb-3">
                     <h6 class="text-muted">Contact Information</h6>
                     <p class="mb-1"><i class="fas fa-envelope me-2"></i><?php echo htmlspecialchars($provider['email']); ?></p>
@@ -209,13 +209,13 @@ $recentRequests = $stmt->fetchAll();
                         <p class="mb-1"><i class="fas fa-phone me-2"></i><?php echo htmlspecialchars($provider['phone']); ?></p>
                     <?php endif; ?>
                 </div>
-                
+
                 <?php if (!empty($providerProfile['address'])): ?>
                     <div class="mb-3">
                         <h6 class="text-muted">Address</h6>
                         <p class="mb-1"><?php echo htmlspecialchars($providerProfile['address']); ?></p>
                         <p class="mb-1">
-                            <?php 
+                            <?php
                             $location = [];
                             if (!empty($providerProfile['city'])) $location[] = htmlspecialchars($providerProfile['city']);
                             if (!empty($providerProfile['state'])) $location[] = htmlspecialchars($providerProfile['state']);
@@ -225,32 +225,32 @@ $recentRequests = $stmt->fetchAll();
                         </p>
                     </div>
                 <?php endif; ?>
-                
+
                 <div class="d-grid gap-2">
-                    <a href="/provider/profile.php" class="btn btn-outline-primary">Edit Profile</a>
+                    <a href="profile.php" class="btn btn-outline-primary">Edit Profile</a>
                 </div>
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">Quick Links</h5>
             </div>
             <div class="card-body">
                 <div class="list-group">
-                    <a href="/provider/services.php?action=add" class="list-group-item list-group-item-action">
+                    <a href="services.php?action=add" class="list-group-item list-group-item-action">
                         <i class="fas fa-plus-circle me-2"></i>Add New Service
                     </a>
-                    <a href="/provider/requests.php?status=pending" class="list-group-item list-group-item-action">
+                    <a href="requests.php?status=pending" class="list-group-item list-group-item-action">
                         <i class="fas fa-clock me-2"></i>Pending Requests
                         <?php if ($pendingRequests > 0): ?>
                             <span class="badge bg-warning rounded-pill"><?php echo $pendingRequests; ?></span>
                         <?php endif; ?>
                     </a>
-                    <a href="/provider/services.php" class="list-group-item list-group-item-action">
+                    <a href="services.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-briefcase me-2"></i>Manage Services
                     </a>
-                    <a href="/customer/search.php" class="list-group-item list-group-item-action">
+                    <a href="services.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-search me-2"></i>Browse All Services
                     </a>
                 </div>

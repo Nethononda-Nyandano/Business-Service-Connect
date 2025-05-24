@@ -13,16 +13,16 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
     $description = isset($_POST['description']) ? sanitizeInput($_POST['description']) : '';
-    
+
     // Basic validation
     if (empty($name)) {
         $errors['name'] = 'Category name is required';
     }
-    
+
     if (empty($description)) {
         $errors['description'] = 'Description is required';
     }
-    
+
     // If no validation errors, save or update the category
     if (empty($errors)) {
         try {
@@ -30,17 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Add new category
                 $stmt = $pdo->prepare("INSERT INTO categories (name, description) VALUES (?, ?)");
                 $stmt->execute([$name, $description]);
-                
+
                 setFlashMessage('success', 'Category added successfully!');
-                header('Location: /admin/categories.php');
+                header('Location: categories.php');
                 exit();
             } elseif ($action === 'edit' && $categoryId) {
                 // Update existing category
                 $stmt = $pdo->prepare("UPDATE categories SET name = ?, description = ? WHERE id = ?");
                 $stmt->execute([$name, $description, $categoryId]);
-                
+
                 setFlashMessage('success', 'Category updated successfully!');
-                header('Location: /admin/categories.php');
+                header('Location: categories.php');
                 exit();
             }
         } catch (PDOException $e) {
@@ -56,17 +56,17 @@ if ($action === 'delete' && $categoryId) {
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM services WHERE category_id = ?");
         $stmt->execute([$categoryId]);
         $serviceCount = $stmt->fetchColumn();
-        
+
         if ($serviceCount > 0) {
             setFlashMessage('error', 'Cannot delete category because it is used by one or more services.');
         } else {
             $stmt = $pdo->prepare("DELETE FROM categories WHERE id = ?");
             $stmt->execute([$categoryId]);
-            
+
             setFlashMessage('success', 'Category deleted successfully!');
         }
-        
-        header('Location: /admin/categories.php');
+
+        header('Location: categories.php');
         exit();
     } catch (PDOException $e) {
         $errors['database'] = 'Database error: ' . $e->getMessage();
@@ -79,10 +79,10 @@ if ($action === 'edit' && $categoryId) {
     $stmt = $pdo->prepare("SELECT * FROM categories WHERE id = ?");
     $stmt->execute([$categoryId]);
     $category = $stmt->fetch();
-    
+
     if (!$category) {
         setFlashMessage('error', 'Category not found');
-        header('Location: /admin/categories.php');
+        header('Location: categories.php');
         exit();
     }
 }
@@ -97,17 +97,17 @@ $categories = getAllCategories();
             <h2>Manage Categories</h2>
             <div>
                 <?php if ($action === 'list'): ?>
-                    <a href="/admin/categories.php?action=add" class="btn btn-primary">
+                    <a href="categories.php?action=add" class="btn btn-primary">
                         <i class="fas fa-plus-circle me-1"></i> Add New Category
                     </a>
                 <?php else: ?>
-                    <a href="/admin/categories.php" class="btn btn-outline-secondary">
+                    <a href="categories.php" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Back to Categories
                     </a>
                 <?php endif; ?>
             </div>
         </div>
-        
+
         <?php if (!empty($errors) && isset($errors['database'])): ?>
             <div class="alert alert-danger mt-3">
                 <?php echo $errors['database']; ?>
@@ -134,7 +134,7 @@ $categories = getAllCategories();
                                 </div>
                             <?php endif; ?>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
                             <textarea class="form-control <?php echo isset($errors['description']) ? 'is-invalid' : ''; ?>" id="description" name="description" rows="3" required><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : (isset($category['description']) ? htmlspecialchars($category['description']) : ''); ?></textarea>
@@ -144,9 +144,9 @@ $categories = getAllCategories();
                                 </div>
                             <?php endif; ?>
                         </div>
-                        
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="/admin/categories.php" class="btn btn-outline-secondary me-md-2">Cancel</a>
+                            <a href="categories.php" class="btn btn-outline-secondary me-md-2">Cancel</a>
                             <button type="submit" class="btn btn-primary">
                                 <?php echo $action === 'add' ? 'Add Category' : 'Save Changes'; ?>
                             </button>
@@ -192,14 +192,14 @@ $categories = getAllCategories();
                                             <td><?php echo $serviceCount; ?></td>
                                             <td>
                                                 <div class="btn-group btn-group-sm">
-                                                    <a href="/admin/services.php?category=<?php echo $cat['id']; ?>" class="btn btn-info">
+                                                    <a href="services.php?category=<?php echo $cat['id']; ?>" class="btn btn-info">
                                                         <i class="fas fa-list"></i> Services
                                                     </a>
-                                                    <a href="/admin/categories.php?action=edit&id=<?php echo $cat['id']; ?>" class="btn btn-primary">
+                                                    <a href="categories.php?action=edit&id=<?php echo $cat['id']; ?>" class="btn btn-primary">
                                                         <i class="fas fa-edit"></i> Edit
                                                     </a>
                                                     <?php if ($serviceCount == 0): ?>
-                                                        <a href="/admin/categories.php?action=delete&id=<?php echo $cat['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.')">
+                                                        <a href="categories.php?action=delete&id=<?php echo $cat['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.')">
                                                             <i class="fas fa-trash-alt"></i> Delete
                                                         </a>
                                                     <?php endif; ?>

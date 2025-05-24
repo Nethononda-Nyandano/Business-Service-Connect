@@ -63,11 +63,11 @@ $categories = getAllCategories();
                         <i class="fas fa-users"></i>
                     </div>
                 </div>
-                <a href="/admin/users.php?type=customer" class="text-decoration-none">View Customers</a>
+                <a href="users.php?type=customer" class="text-decoration-none">View Customers</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-3">
         <div class="card stat-card stat-success">
             <div class="card-body">
@@ -80,11 +80,11 @@ $categories = getAllCategories();
                         <i class="fas fa-store"></i>
                     </div>
                 </div>
-                <a href="/admin/users.php?type=provider" class="text-decoration-none">View Providers</a>
+                <a href="users.php?type=provider" class="text-decoration-none">View Providers</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-3">
         <div class="card stat-card stat-info">
             <div class="card-body">
@@ -97,11 +97,11 @@ $categories = getAllCategories();
                         <i class="fas fa-briefcase"></i>
                     </div>
                 </div>
-                <a href="/admin/services.php" class="text-decoration-none">View Services</a>
+                <a href="services.php" class="text-decoration-none">View Services</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-3">
         <div class="card stat-card stat-warning">
             <div class="card-body">
@@ -156,7 +156,7 @@ $categories = getAllCategories();
                 </div>
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">Categories Overview</h5>
@@ -179,19 +179,19 @@ $categories = getAllCategories();
                         </div>
                     <?php endforeach; ?>
                 </div>
-                
+
                 <div class="text-center mt-3">
-                    <a href="/admin/categories.php" class="btn btn-outline-primary">Manage Categories</a>
+                    <a href="categories.php" class="btn btn-outline-primary">Manage Categories</a>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Recent Users</h5>
-                <a href="/admin/users.php" class="btn btn-sm btn-outline-primary">View All</a>
+                <a href="users.php" class="btn btn-sm btn-outline-primary">View All</a>
             </div>
             <div class="card-body p-0">
                 <ul class="list-group list-group-flush">
@@ -213,26 +213,26 @@ $categories = getAllCategories();
                 </ul>
             </div>
         </div>
-        
+
         <div class="card mb-4">
             <div class="card-header">
                 <h5 class="mb-0">Admin Actions</h5>
             </div>
             <div class="card-body">
                 <div class="list-group">
-                    <a href="/admin/users.php" class="list-group-item list-group-item-action">
+                    <a href="users.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-users me-2"></i>Manage Users
                     </a>
-                    <a href="/admin/services.php" class="list-group-item list-group-item-action">
+                    <a href="services.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-briefcase me-2"></i>Manage Services
                     </a>
-                    <a href="/admin/categories.php" class="list-group-item list-group-item-action">
+                    <a href="categories.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-folder me-2"></i>Manage Categories
                     </a>
                 </div>
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">System Info</h5>

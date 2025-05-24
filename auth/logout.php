@@ -5,6 +5,5 @@ require_once '../includes/functions.php';
 session_destroy();
 
 // Redirect to the homepage
-header('Location: /index.php');
+header('Location: ../index.php');
 exit();
-?>

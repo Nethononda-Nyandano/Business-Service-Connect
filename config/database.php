@@ -1,31 +1,31 @@
 <?php
-// Database configuration
+
 $host = 'localhost';
 $dbname = 'business_service_system';
 $username = 'root';
 $password = '';
 
 try {
-    // Create PDO instance for database connection
+
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    
-    // Set PDO error mode to exception
+
+
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Set default fetch mode to associative array
+
+
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    
-    // Use UTF-8 encoding
+
+
     $pdo->exec("SET NAMES 'utf8'");
-} catch(PDOException $e) {
-    // Display error message if connection fails
+} catch (PDOException $e) {
+
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Create tables if they don't exist
-function setupDatabase($pdo) {
+function setupDatabase($pdo)
+{
     try {
-        // Users table
+
         $pdo->exec("CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(50) NOT NULL UNIQUE,
@@ -37,7 +37,7 @@ function setupDatabase($pdo) {
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )");
 
-        // Provider profiles table
+
         $pdo->exec("CREATE TABLE IF NOT EXISTS provider_profiles (
             id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL,
@@ -55,7 +55,7 @@ function setupDatabase($pdo) {
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )");
 
-        // Service categories table
+
         $pdo->exec("CREATE TABLE IF NOT EXISTS categories (
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL,
@@ -64,7 +64,7 @@ function setupDatabase($pdo) {
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
         )");
 
-        // Services table
+
         $pdo->exec("CREATE TABLE IF NOT EXISTS services (
             id INT AUTO_INCREMENT PRIMARY KEY,
             provider_id INT NOT NULL,
@@ -73,6 +73,7 @@ function setupDatabase($pdo) {
             description TEXT NOT NULL,
             price_range VARCHAR(50),
             availability TEXT,
+            image VARCHAR(255),
             is_active BOOLEAN DEFAULT TRUE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -80,7 +81,7 @@ function setupDatabase($pdo) {
             FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
         )");
 
-        // Service requests table
+
         $pdo->exec("CREATE TABLE IF NOT EXISTS service_requests (
             id INT AUTO_INCREMENT PRIMARY KEY,
             service_id INT NOT NULL,
@@ -96,7 +97,7 @@ function setupDatabase($pdo) {
             FOREIGN KEY (customer_id) REFERENCES users(id) ON DELETE CASCADE
         )");
 
-        // Notifications table
+
         $pdo->exec("CREATE TABLE IF NOT EXISTS notifications (
             id INT AUTO_INCREMENT PRIMARY KEY,
             user_id INT NOT NULL,
@@ -108,20 +109,22 @@ function setupDatabase($pdo) {
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
         )");
 
-        // Insert default data - admin user
+
+
+
         $adminCheck = $pdo->query("SELECT COUNT(*) as count FROM users WHERE user_type = 'admin'");
         $adminExists = $adminCheck->fetch();
-        
+
         if ($adminExists['count'] == 0) {
             $hashedPassword = password_hash('admin123', PASSWORD_DEFAULT);
             $pdo->exec("INSERT INTO users (username, email, password, user_type) 
                        VALUES ('admin', 'admin@example.com', '$hashedPassword', 'admin')");
         }
 
-        // Insert default service categories
+
         $categoriesCheck = $pdo->query("SELECT COUNT(*) as count FROM categories");
         $categoriesExist = $categoriesCheck->fetch();
-        
+
         if ($categoriesExist['count'] == 0) {
             $categories = [
                 ['Home Services', 'Plumbing, electrical, cleaning, repairs, etc.'],
@@ -139,12 +142,10 @@ function setupDatabase($pdo) {
                 $stmt->execute([$category[0], $category[1]]);
             }
         }
-
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         die("Database setup failed: " . $e->getMessage());
     }
 }
 
-// Call the setup function to ensure database is properly initialized
+
 setupDatabase($pdo);
-?>

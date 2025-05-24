@@ -6,7 +6,7 @@ $serviceId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if (!$serviceId) {
     setFlashMessage('error', 'Service ID is required');
-    header('Location: /customer/search.php');
+    header('Location: search.php');
     exit();
 }
 
@@ -15,7 +15,7 @@ $service = getServiceById($serviceId);
 
 if (!$service) {
     setFlashMessage('error', 'Service not found');
-    header('Location: /customer/search.php');
+    header('Location: search.php');
     exit();
 }
 
@@ -51,36 +51,36 @@ $provider = $stmt->fetch();
             </div>
             <div class="card-body">
                 <span class="badge bg-secondary mb-3"><?php echo htmlspecialchars($service['category_name']); ?></span>
-                
+
                 <h5>Description</h5>
                 <div class="mb-4">
                     <?php echo nl2br(htmlspecialchars($service['description'])); ?>
                 </div>
-                
+
                 <?php if (!empty($service['price_range'])): ?>
                     <h5>Price Range</h5>
                     <div class="mb-4">
                         <i class="fas fa-tag me-2"></i><?php echo htmlspecialchars($service['price_range']); ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (!empty($service['availability'])): ?>
                     <h5>Availability</h5>
                     <div class="mb-4">
                         <i class="fas fa-clock me-2"></i><?php echo htmlspecialchars($service['availability']); ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <div class="d-grid gap-2 d-md-flex mt-4">
                     <?php if (isLoggedIn() && isCustomer()): ?>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestServiceModal">
                             <i class="fas fa-paper-plane me-2"></i>Request This Service
                         </button>
                     <?php elseif (!isLoggedIn()): ?>
-                        <a href="/auth/login.php" class="btn btn-primary">
+                        <a href="http://localhost/BusinessServiceTracker/auth/login.php" class="btn btn-primary">
                             <i class="fas fa-sign-in-alt me-2"></i>Login to Request
                         </a>
-                        <a href="/auth/register.php?type=customer" class="btn btn-outline-secondary">
+                        <a href="http://localhost/BusinessServiceTracker/auth/register.php?type=customer" class="btn btn-outline-secondary">
                             Register as Customer
                         </a>
                     <?php endif; ?>
@@ -88,7 +88,7 @@ $provider = $stmt->fetch();
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header">
@@ -104,12 +104,12 @@ $provider = $stmt->fetch();
                         <span class="badge bg-success">Verified</span>
                     <?php endif; ?>
                 </div>
-                
+
                 <div class="mb-3">
                     <h6>About</h6>
                     <p class="small"><?php echo nl2br(htmlspecialchars(substr($provider['description'], 0, 200))); ?>...</p>
                 </div>
-                
+
                 <div class="mb-3">
                     <h6>Contact Information</h6>
                     <p class="mb-1"><i class="fas fa-envelope me-2"></i><?php echo htmlspecialchars($provider['email']); ?></p>
@@ -117,13 +117,13 @@ $provider = $stmt->fetch();
                         <p class="mb-1"><i class="fas fa-phone me-2"></i><?php echo htmlspecialchars($provider['phone']); ?></p>
                     <?php endif; ?>
                 </div>
-                
+
                 <?php if (!empty($provider['city']) || !empty($provider['state'])): ?>
                     <div class="mb-3">
                         <h6>Location</h6>
                         <p class="mb-1">
                             <i class="fas fa-map-marker-alt me-2"></i>
-                            <?php 
+                            <?php
                             $location = [];
                             if (!empty($provider['city'])) $location[] = htmlspecialchars($provider['city']);
                             if (!empty($provider['state'])) $location[] = htmlspecialchars($provider['state']);
@@ -132,7 +132,7 @@ $provider = $stmt->fetch();
                         </p>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (!empty($provider['website'])): ?>
                     <div class="mb-3">
                         <h6>Website</h6>
@@ -161,13 +161,13 @@ $provider = $stmt->fetch();
                 <div class="modal-body">
                     <form id="ajaxServiceRequestForm" class="needs-validation" novalidate>
                         <input type="hidden" name="service_id" value="<?php echo $service['id']; ?>">
-                        
+
                         <div class="mb-3">
                             <label for="request_title" class="form-label">Request Title</label>
                             <input type="text" class="form-control" id="request_title" name="title" required>
                             <div class="invalid-feedback">Please provide a title for your request.</div>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="request_description" class="form-label">Describe What You Need</label>
                             <textarea class="form-control" id="request_description" name="description" rows="4" required></textarea>
@@ -176,19 +176,19 @@ $provider = $stmt->fetch();
                                 Be as specific as possible about what you need, including any relevant details that will help the service provider understand your requirements.
                             </div>
                         </div>
-                        
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="requested_date" class="form-label">Preferred Date (optional)</label>
                                 <input type="date" class="form-control" id="requested_date" name="requested_date">
                             </div>
-                            
+
                             <div class="col-md-6">
                                 <label for="requested_time" class="form-label">Preferred Time (optional)</label>
                                 <input type="text" class="form-control" id="requested_time" name="requested_time" placeholder="e.g., Morning, Afternoon, 2-4 PM">
                             </div>
                         </div>
-                        
+
                         <div class="alert alert-info">
                             <small>
                                 <i class="fas fa-info-circle me-2"></i>
@@ -196,7 +196,7 @@ $provider = $stmt->fetch();
                                 The provider will review your request and respond directly to you.
                             </small>
                         </div>
-                        
+
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Submit Request</button>

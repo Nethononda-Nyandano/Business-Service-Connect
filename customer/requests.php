@@ -1,16 +1,16 @@
 <?php
 require_once '../includes/header.php';
 
-// Require customer login
+
 requireCustomer();
 
-// Get customer data
+
 $customer = getCurrentUser();
 $customerId = $customer['id'];
 $requestId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $statusFilter = isset($_GET['status']) ? sanitizeInput($_GET['status']) : '';
 
-// Get single request details
+
 $request = null;
 if ($requestId) {
     $stmt = $pdo->prepare("
@@ -25,7 +25,7 @@ if ($requestId) {
     ");
     $stmt->execute([$requestId, $customerId]);
     $request = $stmt->fetch();
-    
+
     if (!$request) {
         setFlashMessage('error', 'Request not found');
         header('Location: /customer/requests.php');
@@ -33,7 +33,7 @@ if ($requestId) {
     }
 }
 
-// Get all requests for this customer with optional status filter
+
 $requests = [];
 $sql = "
     SELECT sr.*, s.title as service_title, pp.business_name
@@ -58,17 +58,17 @@ $requests = $stmt->fetchAll();
 ?>
 
 <?php if ($request): ?>
-    <!-- Single Request View -->
+
     <div class="row mb-4">
         <div class="col-md-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/customer/dashboard.php">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="/customer/requests.php">My Requests</a></li>
+                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="requests.php">My Requests</a></li>
                     <li class="breadcrumb-item active">Request #<?php echo $request['id']; ?></li>
                 </ol>
             </nav>
-            
+
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">Request Details</h4>
@@ -81,6 +81,14 @@ $requests = $stmt->fetchAll();
                             <div class="mb-3">
                                 <strong>Title:</strong> <?php echo htmlspecialchars($request['title']); ?>
                             </div>
+                            <?php if (!empty($request['image_path'])): ?>
+                                <div class="mb-3 text-center">
+                                    <img src="<?php echo htmlspecialchars('../'.$service['image_path']); ?>"
+                                        alt="Service Image"
+                                        class="img-fluid rounded shadow border"
+                                        style="max-width: 100%; max-height: 180px; object-fit: cover;">
+                                </div>
+                            <?php endif; ?>
                             <div class="mb-3">
                                 <strong>Description:</strong>
                                 <p><?php echo nl2br(htmlspecialchars($request['description'])); ?></p>
@@ -108,7 +116,7 @@ $requests = $stmt->fetchAll();
                                     <strong>Price Range:</strong> <?php echo htmlspecialchars($request['price_range']); ?>
                                 </div>
                             <?php endif; ?>
-                            
+
                             <h5 class="mt-4">Contact Information</h5>
                             <div class="mb-3">
                                 <strong>Email:</strong> <a href="mailto:<?php echo htmlspecialchars($request['provider_email']); ?>"><?php echo htmlspecialchars($request['provider_email']); ?></a>
@@ -120,14 +128,14 @@ $requests = $stmt->fetchAll();
                             <?php endif; ?>
                         </div>
                     </div>
-                    
+
                     <?php if ($request['status'] === 'pending'): ?>
                         <hr>
                         <div class="row">
                             <div class="col-12">
                                 <h5>Actions</h5>
                                 <p>You can cancel this request if you no longer need this service.</p>
-                                
+
                                 <button class="btn btn-danger update-request-status" data-request-id="<?php echo $request['id']; ?>" data-status="cancelled">
                                     <i class="fas fa-times-circle me-1"></i> Cancel Request
                                 </button>
@@ -136,7 +144,7 @@ $requests = $stmt->fetchAll();
                     <?php endif; ?>
                 </div>
                 <div class="card-footer">
-                    <a href="/customer/requests.php" class="btn btn-outline-secondary">
+                    <a href="requests.php" class="btn btn-outline-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Back to My Requests
                     </a>
                 </div>
@@ -152,7 +160,7 @@ $requests = $stmt->fetchAll();
                 <div>
                     <div class="dropdown d-inline-block">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="statusFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php 
+                            <?php
                             if ($statusFilter) {
                                 echo 'Status: ' . ucfirst($statusFilter);
                             } else {
@@ -161,22 +169,22 @@ $requests = $stmt->fetchAll();
                             ?>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="statusFilterDropdown">
-                            <li><a class="dropdown-item <?php echo $statusFilter === '' ? 'active' : ''; ?>" href="/customer/requests.php">All Requests</a></li>
-                            <li><a class="dropdown-item <?php echo $statusFilter === 'pending' ? 'active' : ''; ?>" href="/customer/requests.php?status=pending">Pending</a></li>
-                            <li><a class="dropdown-item <?php echo $statusFilter === 'accepted' ? 'active' : ''; ?>" href="/customer/requests.php?status=accepted">Accepted</a></li>
-                            <li><a class="dropdown-item <?php echo $statusFilter === 'completed' ? 'active' : ''; ?>" href="/customer/requests.php?status=completed">Completed</a></li>
-                            <li><a class="dropdown-item <?php echo $statusFilter === 'rejected' ? 'active' : ''; ?>" href="/customer/requests.php?status=rejected">Rejected</a></li>
-                            <li><a class="dropdown-item <?php echo $statusFilter === 'cancelled' ? 'active' : ''; ?>" href="/customer/requests.php?status=cancelled">Cancelled</a></li>
+                            <li><a class="dropdown-item <?php echo $statusFilter === '' ? 'active' : ''; ?>" href="requests.php">All Requests</a></li>
+                            <li><a class="dropdown-item <?php echo $statusFilter === 'pending' ? 'active' : ''; ?>" href="requests.php?status=pending">Pending</a></li>
+                            <li><a class="dropdown-item <?php echo $statusFilter === 'accepted' ? 'active' : ''; ?>" href="requests.php?status=accepted">Accepted</a></li>
+                            <li><a class="dropdown-item <?php echo $statusFilter === 'completed' ? 'active' : ''; ?>" href="requests.php?status=completed">Completed</a></li>
+                            <li><a class="dropdown-item <?php echo $statusFilter === 'rejected' ? 'active' : ''; ?>" href="requests.php?status=rejected">Rejected</a></li>
+                            <li><a class="dropdown-item <?php echo $statusFilter === 'cancelled' ? 'active' : ''; ?>" href="requests.php?status=cancelled">Cancelled</a></li>
                         </ul>
                     </div>
-                    <a href="/customer/search.php" class="btn btn-primary ms-2">
+                    <a href="search.php" class="btn btn-primary ms-2">
                         <i class="fas fa-search me-1"></i> Find Services
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <?php if (empty($requests)): ?>
         <div class="alert alert-info">
             <p class="mb-0">
@@ -187,7 +195,7 @@ $requests = $stmt->fetchAll();
                 <?php endif; ?>
             </p>
             <div class="mt-3">
-                <a href="/customer/search.php" class="btn btn-primary">Find Services</a>
+                <a href="search.php" class="btn btn-primary">Find Services</a>
             </div>
         </div>
     <?php else: ?>
@@ -221,10 +229,10 @@ $requests = $stmt->fetchAll();
                                             <td><?php echo getStatusBadge($req['status']); ?></td>
                                             <td><?php echo formatDate($req['created_at']); ?></td>
                                             <td>
-                                                <a href="/customer/requests.php?id=<?php echo $req['id']; ?>" class="btn btn-sm btn-primary">
+                                                <a href="requests.php?id=<?php echo $req['id']; ?>" class="btn btn-sm btn-primary">
                                                     <i class="fas fa-eye"></i> View
                                                 </a>
-                                                
+
                                                 <?php if ($req['status'] === 'pending'): ?>
                                                     <button class="btn btn-sm btn-danger mt-1 update-request-status" data-request-id="<?php echo $req['id']; ?>" data-status="cancelled">
                                                         <i class="fas fa-times-circle"></i> Cancel

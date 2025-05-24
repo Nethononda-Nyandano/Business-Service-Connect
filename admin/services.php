@@ -16,18 +16,18 @@ if ($action === 'delete' && $serviceId) {
     try {
         $stmt = $pdo->prepare("DELETE FROM services WHERE id = ?");
         $stmt->execute([$serviceId]);
-        
+
         if ($stmt->rowCount() > 0) {
             setFlashMessage('success', 'Service deleted successfully!');
         } else {
             setFlashMessage('error', 'Service not found.');
         }
-        
+
         $redirectQuery = [];
         if ($categoryId) $redirectQuery[] = "category=$categoryId";
         if ($providerId) $redirectQuery[] = "provider=$providerId";
-        $redirectUrl = '/admin/services.php' . (!empty($redirectQuery) ? '?' . implode('&', $redirectQuery) : '');
-        
+        $redirectUrl = 'services.php' . (!empty($redirectQuery) ? '?' . implode('&', $redirectQuery) : '');
+
         header('Location: ' . $redirectUrl);
         exit();
     } catch (PDOException $e) {
@@ -40,18 +40,18 @@ if ($action === 'toggle' && $serviceId) {
     try {
         $stmt = $pdo->prepare("UPDATE services SET is_active = NOT is_active WHERE id = ?");
         $stmt->execute([$serviceId]);
-        
+
         if ($stmt->rowCount() > 0) {
             setFlashMessage('success', 'Service status updated successfully!');
         } else {
             setFlashMessage('error', 'Service not found.');
         }
-        
+
         $redirectQuery = [];
         if ($categoryId) $redirectQuery[] = "category=$categoryId";
         if ($providerId) $redirectQuery[] = "provider=$providerId";
-        $redirectUrl = '/admin/services.php' . (!empty($redirectQuery) ? '?' . implode('&', $redirectQuery) : '');
-        
+        $redirectUrl = 'services.php' . (!empty($redirectQuery) ? '?' . implode('&', $redirectQuery) : '');
+
         header('Location: ' . $redirectUrl);
         exit();
     } catch (PDOException $e) {
@@ -104,12 +104,12 @@ $services = $stmt->fetchAll();
         <div class="d-flex justify-content-between align-items-center">
             <h2>Manage Services</h2>
             <div>
-                <a href="/admin/categories.php" class="btn btn-outline-primary">
+                <a href="categories.php" class="btn btn-outline-primary">
                     <i class="fas fa-folder me-1"></i> Manage Categories
                 </a>
             </div>
         </div>
-        
+
         <?php if (!empty($errors) && isset($errors['database'])): ?>
             <div class="alert alert-danger mt-3">
                 <?php echo $errors['database']; ?>
@@ -125,7 +125,7 @@ $services = $stmt->fetchAll();
                 <h5 class="mb-0">Filter Services</h5>
             </div>
             <div class="card-body">
-                <form action="/admin/services.php" method="get" class="row g-3">
+                <form action="services.php" method="get" class="row g-3">
                     <div class="col-md-5">
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" id="category" name="category">
@@ -137,7 +137,7 @@ $services = $stmt->fetchAll();
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    
+
                     <div class="col-md-5">
                         <label for="provider" class="form-label">Provider</label>
                         <select class="form-select" id="provider" name="provider">
@@ -149,7 +149,7 @@ $services = $stmt->fetchAll();
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    
+
                     <div class="col-md-2 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
                     </div>
@@ -198,13 +198,13 @@ $services = $stmt->fetchAll();
                                         <td><?php echo formatDate($service['created_at']); ?></td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <a href="/customer/search.php?service_id=<?php echo $service['id']; ?>" class="btn btn-primary" target="_blank">
+                                                <a href="http://localhost/BusinessServiceTracker/customer/search.php?service_id=<?php echo $service['id']; ?>" class="btn btn-primary" target="_blank">
                                                     <i class="fas fa-eye"></i> View
                                                 </a>
-                                                <a href="/admin/services.php?action=toggle&id=<?php echo $service['id']; ?>" class="btn btn-<?php echo $service['is_active'] ? 'warning' : 'success'; ?>">
+                                                <a href="services.php?action=toggle&id=<?php echo $service['id']; ?>" class="btn btn-<?php echo $service['is_active'] ? 'warning' : 'success'; ?>">
                                                     <i class="fas <?php echo $service['is_active'] ? 'fa-ban' : 'fa-check'; ?>"></i> <?php echo $service['is_active'] ? 'Disable' : 'Enable'; ?>
                                                 </a>
-                                                <a href="/admin/services.php?action=delete&id=<?php echo $service['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this service? This action cannot be undone.')">
+                                                <a href="services.php?action=delete&id=<?php echo $service['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this service? This action cannot be undone.')">
                                                     <i class="fas fa-trash-alt"></i> Delete
                                                 </a>
                                             </div>

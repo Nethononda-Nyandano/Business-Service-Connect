@@ -64,7 +64,7 @@ $recentServices = $stmt->fetchAll();
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center">
             <h2>Customer Dashboard</h2>
-            <a href="/customer/search.php" class="btn btn-primary">
+            <a href="search.php" class="btn btn-primary">
                 <i class="fas fa-search me-2"></i>Find Services
             </a>
         </div>
@@ -84,11 +84,11 @@ $recentServices = $stmt->fetchAll();
                         <i class="fas fa-clipboard-list"></i>
                     </div>
                 </div>
-                <a href="/customer/requests.php" class="text-decoration-none">View All Requests</a>
+                <a href="requests.php" class="text-decoration-none">View All Requests</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card stat-card stat-warning">
             <div class="card-body">
@@ -101,11 +101,11 @@ $recentServices = $stmt->fetchAll();
                         <i class="fas fa-clock"></i>
                     </div>
                 </div>
-                <a href="/customer/requests.php?status=pending" class="text-decoration-none">View Pending</a>
+                <a href="requests.php?status=pending" class="text-decoration-none">View Pending</a>
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card stat-card stat-success">
             <div class="card-body">
@@ -118,7 +118,7 @@ $recentServices = $stmt->fetchAll();
                         <i class="fas fa-check-circle"></i>
                     </div>
                 </div>
-                <a href="/customer/requests.php?status=accepted" class="text-decoration-none">View Active</a>
+                <a href="requests.php?status=accepted" class="text-decoration-none">View Active</a>
             </div>
         </div>
     </div>
@@ -129,13 +129,13 @@ $recentServices = $stmt->fetchAll();
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Recent Service Requests</h5>
-                <a href="/customer/requests.php" class="btn btn-sm btn-outline-primary">View All</a>
+                <a href="requests.php" class="btn btn-sm btn-outline-primary">View All</a>
             </div>
             <div class="card-body">
                 <?php if (empty($recentRequests)): ?>
                     <p class="text-center py-3 text-muted">You haven't submitted any service requests yet.</p>
                     <div class="text-center">
-                        <a href="/customer/search.php" class="btn btn-primary">Find Services</a>
+                        <a href="search.php" class="btn btn-primary">Find Services</a>
                     </div>
                 <?php else: ?>
                     <div class="table-responsive">
@@ -159,7 +159,7 @@ $recentServices = $stmt->fetchAll();
                                         <td><?php echo getStatusBadge($request['status']); ?></td>
                                         <td><?php echo formatDate($request['created_at']); ?></td>
                                         <td>
-                                            <a href="/customer/requests.php?id=<?php echo $request['id']; ?>" class="btn btn-sm btn-outline-primary">
+                                            <a href="requests.php?id=<?php echo $request['id']; ?>" class="btn btn-sm btn-outline-primary">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
@@ -172,7 +172,7 @@ $recentServices = $stmt->fetchAll();
             </div>
         </div>
     </div>
-    
+
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header">
@@ -185,7 +185,7 @@ $recentServices = $stmt->fetchAll();
                     </div>
                     <h5><?php echo htmlspecialchars($customer['username']); ?></h5>
                 </div>
-                
+
                 <div class="mb-3">
                     <h6 class="text-muted">Contact Information</h6>
                     <p class="mb-1"><i class="fas fa-envelope me-2"></i><?php echo htmlspecialchars($customer['email']); ?></p>
@@ -193,29 +193,29 @@ $recentServices = $stmt->fetchAll();
                         <p class="mb-1"><i class="fas fa-phone me-2"></i><?php echo htmlspecialchars($customer['phone']); ?></p>
                     <?php endif; ?>
                 </div>
-                
+
                 <div class="d-grid gap-2">
-                    <a href="/customer/profile.php" class="btn btn-outline-primary">Edit Profile</a>
+                    <a href="profile.php" class="btn btn-outline-primary">Edit Profile</a>
                 </div>
             </div>
         </div>
-        
+
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0">Quick Links</h5>
             </div>
             <div class="card-body">
                 <div class="list-group">
-                    <a href="/customer/search.php" class="list-group-item list-group-item-action">
+                    <a href="search.php" class="list-group-ite list-group-item-action">
                         <i class="fas fa-search me-2"></i>Find Services
                     </a>
-                    <a href="/customer/requests.php?status=pending" class="list-group-item list-group-item-action">
+                    <a href="requests.php?status=pending" class="list-group-item list-group-item-action">
                         <i class="fas fa-clock me-2"></i>Pending Requests
                         <?php if ($pendingRequests > 0): ?>
                             <span class="badge bg-warning rounded-pill"><?php echo $pendingRequests; ?></span>
                         <?php endif; ?>
                     </a>
-                    <a href="/customer/requests.php" class="list-group-item list-group-item-action">
+                    <a href="requests.php" class="list-group-item list-group-item-action">
                         <i class="fas fa-clipboard-list me-2"></i>My Service Requests
                     </a>
                 </div>
@@ -229,7 +229,7 @@ $recentServices = $stmt->fetchAll();
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Recent Services</h5>
-                <a href="/customer/search.php" class="btn btn-sm btn-outline-primary">View All</a>
+                <a href="search.php" class="btn btn-sm btn-outline-primary">View All</a>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -240,19 +240,23 @@ $recentServices = $stmt->fetchAll();
                     <?php else: ?>
                         <?php foreach ($recentServices as $service): ?>
                             <div class="col-md-3 mb-3">
-                                <div class="card h-100 service-card">
+                                <div class="card h-100 service-card border-primary">
                                     <div class="card-body">
-                                        <h6 class="card-title"><?php echo htmlspecialchars($service['title']); ?></h6>
+                                        <h6 class="card-title p-2 bg-primary"><?php echo htmlspecialchars($service['title']); ?></h6>
+
                                         <p class="card-subtitle mb-2 text-muted small">
                                             <?php echo htmlspecialchars($service['business_name']); ?>
                                         </p>
+                                        <img src="<?php echo htmlspecialchars('../' . $service['image_path']) ?>"
+                                            class="img-fluid rounded shadow border"
+                                            style="max-width: 100%; max-height: 180px; object-fit: cover;" />
                                         <div class="mb-2">
                                             <span class="badge bg-secondary"><?php echo htmlspecialchars($service['category_name']); ?></span>
                                         </div>
                                         <p class="card-text small"><?php echo htmlspecialchars(substr($service['description'], 0, 80)); ?>...</p>
                                     </div>
                                     <div class="card-footer bg-transparent border-top-0">
-                                        <a href="/customer/search.php?service_id=<?php echo $service['id']; ?>" class="btn btn-sm btn-primary">View Details</a>
+                                        <a href="search.php?service_id=<?php echo $service['id']; ?>" class="btn btn-sm btn-primary">View Details</a>
                                     </div>
                                 </div>
                             </div>

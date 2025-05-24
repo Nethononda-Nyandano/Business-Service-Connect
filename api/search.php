@@ -2,15 +2,15 @@
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
-// Set header to return JSON
+
 header('Content-Type: application/json');
 
-// Get search parameters
+
 $query = isset($_GET['q']) ? sanitizeInput($_GET['q']) : '';
 $categoryId = isset($_GET['category']) ? (int)$_GET['category'] : 0;
 $location = isset($_GET['location']) ? sanitizeInput($_GET['location']) : '';
 
-// Build SQL query
+
 $sql = "
     SELECT s.*, c.name as category_name, pp.business_name, pp.city, pp.state, pp.zip
     FROM services s
@@ -48,10 +48,10 @@ try {
     $stmt->execute($params);
     $services = $stmt->fetchAll();
     
-    // Return search results as JSON
+    
     echo json_encode($services);
 } catch (PDOException $e) {
-    // Return error
+   
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
 }

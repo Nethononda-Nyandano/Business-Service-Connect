@@ -61,9 +61,9 @@ function handleGetRequests() {
                 FROM notifications
                 WHERE user_id = ?
                 ORDER BY created_at DESC
-                LIMIT ?
-            ");
-            $stmt->execute([$userId, $limit]);
+                LIMIT " . $limit
+            );
+            $stmt->execute([$userId]);
             $notifications = $stmt->fetchAll();
             
             // Format the notifications

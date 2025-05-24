@@ -1,63 +1,63 @@
 <?php
 require_once '../includes/header.php';
 
-// Redirect if already logged in
+
 if (isLoggedIn()) {
     if (isAdmin()) {
         header('Location: /admin/dashboard.php');
     } elseif (isProvider()) {
-        header('Location: /provider/dashboard.php');
+        header('Location: /provider/index.php');
     } else {
-        header('Location: /customer/dashboard.php');
+        header('Location: ../customer/index.php');
     }
     exit();
 }
 
 $errors = [];
 
-// Handle login form submission
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get form data
+
     $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
-    
-    // Basic validation
+
+
     if (empty($email)) {
         $errors['email'] = 'Email is required';
     }
-    
+
     if (empty($password)) {
         $errors['password'] = 'Password is required';
     }
-    
-    // If no validation errors, attempt to log in
+
+
     if (empty($errors)) {
         try {
-            // Check if user exists
+
             $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);
             $user = $stmt->fetch();
-            
+
             if ($user && password_verify($password, $user['password'])) {
-                // Set session variables
+
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['user_type'] = $user['user_type'];
-                
-                // Redirect based on user type
+
+
                 if ($user['user_type'] === 'admin') {
-                    header('Location: /admin/dashboard.php');
+                    header('Location: ../admin/dashboard.php');
                 } elseif ($user['user_type'] === 'provider') {
-                    // Check if provider has completed profile
+
                     if (hasProviderProfile($user['id'])) {
-                        header('Location: /provider/dashboard.php');
+                        header('Location: ../provider/dashboard.php');
                     } else {
-                        // Redirect to complete profile
+
                         setFlashMessage('info', 'Please complete your business profile to continue');
-                        header('Location: /provider/profile.php');
+                        header('Location: ../provider/profile.php');
                     }
                 } else {
-                    header('Location: /customer/dashboard.php');
+                    header('Location: ../customer/dashboard.php');
                 }
                 exit();
             } else {
@@ -82,13 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php echo $errors['login']; ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <?php if (!empty($errors) && isset($errors['database'])): ?>
                     <div class="alert alert-danger">
                         <?php echo $errors['database']; ?>
                     </div>
                 <?php endif; ?>
-                
+
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="needs-validation" novalidate>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         <?php endif; ?>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control <?php echo isset($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" required>
@@ -109,14 +109,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         <?php endif; ?>
                     </div>
-                    
+
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </div>
             <div class="card-footer text-center">
-                <p class="mb-0">Don't have an account? <a href="/auth/register.php">Register here</a></p>
+                <p class="mb-0">Don't have an account? <a href="register.php">Register here</a></p>
             </div>
         </div>
     </div>
