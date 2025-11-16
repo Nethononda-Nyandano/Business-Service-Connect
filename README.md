@@ -1,6 +1,6 @@
 # Business-Service-Connect
 
-![Banner](./assets/banner.png)
+![Banner](./images/banner.png)
 
 Business-Service-Connect is a modern web platform that connects **small business service providers** with **people who need their services**.  
 It aims to support local businesses by creating a simple marketplace where users can **post service requests**, and providers can **respond, advertise, and accept jobs**.
@@ -82,9 +82,9 @@ Business-Service-Connect provides a streamlined way for:
 **Nethononda Nyandano**  
 Full-Stack Developer | PHP • JavaScript • Tailwind • MySQL  
 
-- **GitHub:** https://github.com/yourusername  
+- **GitHub:** https://github.com/Nethononda-Nyandano 
 - **LinkedIn:** (add your LinkedIn link)  
-- **Email:** (add your email)  
+- **Email:** nyandanonethononda8@gmail.com  
 - **Location:** South Africa  
 
 ---
