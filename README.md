@@ -30,16 +30,6 @@ Built using:
 - [About the Project](#about-the-project)  
 - [Key Features](#key-features)  
 - [Technology Stack](#technology-stack)  
-- [Screenshots](#screenshots)  
-- [Live Demo (Optional)](#live-demo-optional)  
-- [Folder Structure](#folder-structure)  
-- [Environment Variables](#environment-variables)  
-- [Installation Guide](#installation-guide)  
-- [API Documentation](#api-documentation)  
-- [Roadmap](#roadmap)  
-- [Contributing](#contributing)  
-- [Changelog](#changelog)  
-- [License](#license)  
 - [Author](#author)  
 
 ---
@@ -87,5 +77,15 @@ Business-Service-Connect provides a streamlined way for:
 
 ---
 
-# Screenshots
+# Author
+
+**Nethononda Nyandano**  
+Full-Stack Developer | PHP • JavaScript • Tailwind • MySQL  
+
+- **GitHub:** https://github.com/yourusername  
+- **LinkedIn:** (add your LinkedIn link)  
+- **Email:** (add your email)  
+- **Location:** South Africa  
+
+---
 
