@@ -1,6 +1,6 @@
 # Business-Service-Connect
 
-![Banner](./images/banner.png)
+![Banner](./Images/banner.png)
 
 Business-Service-Connect is a modern web platform that connects **small business service providers** with **people who need their services**.  
 It aims to support local businesses by creating a simple marketplace where users can **post service requests**, and providers can **respond, advertise, and accept jobs**.
