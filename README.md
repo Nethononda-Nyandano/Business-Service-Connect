@@ -82,8 +82,7 @@ Business-Service-Connect provides a streamlined way for:
 **Nethononda Nyandano**  
 Full-Stack Developer | PHP • JavaScript • Tailwind • MySQL  
 
-- **GitHub:** https://github.com/Nethononda-Nyandano 
-- **LinkedIn:** (add your LinkedIn link)  
+- **GitHub:** https://github.com/Nethononda-Nyandano  
 - **Email:** nyandanonethononda8@gmail.com  
 - **Location:** South Africa  
 
